@@ -1,21 +1,29 @@
 import os
 import random
 import time
+import glob
 
-ownership=["-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-"]
-squares=["",0,"",1,"",2,3,"",4,5,"",6,7,8,9,10,11,12,"",13,"",14,"",15,16,17,18,19,20,21,"",22,23,"",24,25,"",26,"",27]
-value=[60,60,200,100,100,120,140,150,140,160,200,180,180,200,220,220,240,200,260,260,150,280,300,300,320,200,350,400]
-rent=[2,4,"r",6,6,8,10,"u",10,12,"r",14,14,16,18,18,20,"r",22,22,"u",24,26,26,28,"r",35,50]
-players=["r","g","b","y"]
-cash=[1500,1500,1500,1500]
-player_position=[0,0,0,0]
-current_player=0
+files = glob.glob("*.txt")
+
+for i in range(len(files)):
+     globals()[files[i].rstrip('.txt')] = []
+     file = open(files[i],'r')
+     txt = file.readlines()
+     for j in range(len(txt)):     
+          txt[j] = txt[j].rstrip('\n')
+          try:
+              txt[j] = int(txt[j])
+          except ValueError:
+               pass
+          exec(files[i].rstrip('.txt') + ".append(txt[j])") 
+     file.close()
 
 def print_board():
     alist = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
     for i in range(0,4):
         if alist[player_position[i]]==0:
             alist[player_position[i]] = players[i]
+            
     print (" "," ",ownership[14]," ",ownership[15],ownership[16],ownership[17],ownership[18],ownership[19],ownership[20],ownership[21]," "," ")
     print (" ",alist[20],alist[21],alist[22],alist[23],alist[24],alist[25],alist[26],alist[27],alist[28],alist[29],alist[30]," ")
     print (ownership[13],alist[19],"                 ",alist[31],ownership[22])
@@ -29,6 +37,7 @@ def print_board():
     print (ownership[6],alist[11],"                 ",alist[39],ownership[27])
     print (" ",alist[10],alist[9],alist[8],alist[7],alist[6],alist[5],alist[4],alist[3],alist[2],alist[1],alist[0]," ")
     print (" "," ",ownership[5],ownership[4]," ",ownership[3],ownership[2]," ",ownership[1]," ",ownership[0]," "," ")
+    
     print("r: ", cash[0])
     print("g: ", cash[1])
     print("b: ", cash[2])
